@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+redis:
+  host: localhost
+  port: 6379
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  token-validity-in-milliseconds: 360000000
