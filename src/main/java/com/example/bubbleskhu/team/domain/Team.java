@@ -1,5 +1,6 @@
 package com.example.bubbleskhu.team.domain;
 
+import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.member.domain.JoinTeam;
 import com.example.bubbleskhu.member.domain.Member;
 import lombok.AllArgsConstructor;
@@ -26,5 +27,8 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<JoinTeam> members = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
 }
