@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column
     private Grade grade;
-    @Column
+    @Column(name = "user_email")
     private String userId;
     @Column
     private String userPassword;
