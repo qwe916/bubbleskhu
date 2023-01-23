@@ -3,6 +3,7 @@ package com.example.bubbleskhu.global.common.security.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.lang.Strings;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends GenericFilter {
 
     private final JwtTokenProvider tokenProvider;
@@ -22,6 +24,7 @@ public class JwtFilter extends GenericFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
         String token = resolve((HttpServletRequest) request);
         if (Strings.hasText(token) && tokenProvider.validateToken(token)) {
             String isLogout = (String) redisTemplate.opsForValue().get(token);

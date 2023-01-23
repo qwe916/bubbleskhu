@@ -1,13 +1,17 @@
 package com.example.bubbleskhu.global.common.security.application;
 
+import com.example.bubbleskhu.global.common.security.dao.RoleRepository;
 import com.example.bubbleskhu.global.common.security.domain.dto.TokenDTO;
 import com.example.bubbleskhu.global.common.security.domain.dto.request.LoginRequestDTO;
 import com.example.bubbleskhu.global.common.security.domain.dto.request.SignUpRequestDTO;
 import com.example.bubbleskhu.global.common.security.jwt.JwtTokenProvider;
+import com.example.bubbleskhu.global.common.security.role.Role;
 import com.example.bubbleskhu.global.error.CustomException;
+import com.example.bubbleskhu.major.dao.MajorRepository;
 import com.example.bubbleskhu.member.dao.UserRepository;
 import com.example.bubbleskhu.member.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +20,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoginService {
-
+    private final RoleRepository roleRepository;
+    private final MajorRepository majorRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -30,6 +38,7 @@ public class LoginService {
 
 
     public TokenDTO login(LoginRequestDTO loginRequestDTO) {
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDTO.getUserId(), loginRequestDTO.getUserPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -46,12 +55,14 @@ public class LoginService {
         if (userRepository.existsByUserId(signUpRequestDTO.getUserId())) {
             throw new CustomException("이미 존재하는 회원 입니다.", HttpStatus.UNPROCESSABLE_ENTITY);
         } else {
+
             User user = User.builder()
                     .userId(signUpRequestDTO.getUserId())
-                    .userPassword(signUpRequestDTO.getUserPassword())
-                    .major(signUpRequestDTO.getMajor())
+                    .userPassword(passwordEncoder.encode(signUpRequestDTO.getUserPassword()))
+                    .major(majorRepository.findById(signUpRequestDTO.getMajorId()).get())
                     .grade(signUpRequestDTO.getGrade())
                     .name(signUpRequestDTO.getName())
+                    .roles(Collections.singletonList(roleRepository.findById(1L).get()))
                     .build();
             userRepository.save(user);
         }

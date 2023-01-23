@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class SignUpRequestDTO {
     private String name;
-    private Major major;
+    private Long majorId;
     private Grade grade;
     private String userId;
     private String userPassword;

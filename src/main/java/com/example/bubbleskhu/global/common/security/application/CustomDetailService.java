@@ -3,21 +3,25 @@ package com.example.bubbleskhu.global.common.security.application;
 import com.example.bubbleskhu.global.common.security.role.Role;
 import com.example.bubbleskhu.member.application.UserService;
 import com.example.bubbleskhu.member.domain.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Service
+@RequiredArgsConstructor
 public class CustomDetailService implements UserDetailsService {
-    private UserService service;
+    private final UserService service;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = service.findUser(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-
         user.setAuthorities(
                 Stream.concat(
                         getRoles(user.getRoles()).stream(),
