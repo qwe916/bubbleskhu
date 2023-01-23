@@ -1,11 +1,11 @@
 package com.example.bubbleskhu.global.common.security.application;
 
 import com.example.bubbleskhu.global.common.security.dao.RoleRepository;
+import com.example.bubbleskhu.global.common.security.domain.dto.LogoutRequestDTO;
 import com.example.bubbleskhu.global.common.security.domain.dto.TokenDTO;
 import com.example.bubbleskhu.global.common.security.domain.dto.request.LoginRequestDTO;
 import com.example.bubbleskhu.global.common.security.domain.dto.request.SignUpRequestDTO;
 import com.example.bubbleskhu.global.common.security.jwt.JwtTokenProvider;
-import com.example.bubbleskhu.global.common.security.role.Role;
 import com.example.bubbleskhu.global.error.CustomException;
 import com.example.bubbleskhu.major.dao.MajorRepository;
 import com.example.bubbleskhu.member.dao.UserRepository;
@@ -14,15 +14,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
@@ -51,7 +50,7 @@ public class LoginService {
 
     }
 
-    public void signUp(SignUpRequestDTO signUpRequestDTO) {
+    public void signup(SignUpRequestDTO signUpRequestDTO) {
         if (userRepository.existsByUserId(signUpRequestDTO.getUserId())) {
             throw new CustomException("이미 존재하는 회원 입니다.", HttpStatus.UNPROCESSABLE_ENTITY);
         } else {
@@ -67,4 +66,24 @@ public class LoginService {
             userRepository.save(user);
         }
     }
+
+    public ResponseEntity<?> logout(LogoutRequestDTO logoutRequestDTO) {
+        if (!tokenProvider.validateToken(logoutRequestDTO.getAccessToken())) {
+            return new ResponseEntity<>("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        Authentication authentication = tokenProvider.getAuthentication(logoutRequestDTO.getAccessToken());
+
+        if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
+            redisTemplate.delete(authentication.getName());
+        }
+
+        Long expiration = tokenProvider.getExpiration(logoutRequestDTO.getAccessToken());
+
+        redisTemplate.opsForValue().set(logoutRequestDTO.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+
+        return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
+
+
 }
