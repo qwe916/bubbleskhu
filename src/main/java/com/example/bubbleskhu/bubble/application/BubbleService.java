@@ -38,4 +38,8 @@ public class BubbleService {
                 .presentNumberOfUser(bubble.getUsers().size())
                 .build();
     }
+
+    public void deleteBubbleById(Long id) {
+        bubbleRepository.deleteById(id);
+    }
 }

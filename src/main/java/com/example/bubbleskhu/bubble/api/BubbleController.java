@@ -32,5 +32,13 @@ public class BubbleController {
         return ResponseEntity.ok(bubbleService.findBubbleById(id));
     }
 
+    @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
+    @DeleteMapping("/bubbles/{id}")
+    public ResponseEntity<String> deleteBubbleById(@PathVariable("id") Long id) {
+        bubbleService.deleteBubbleById(id);
+        return ResponseEntity.ok("Bubble 삭제완료");
+    }
+
+
 
 }
