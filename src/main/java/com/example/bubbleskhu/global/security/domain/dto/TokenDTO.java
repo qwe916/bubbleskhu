@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.global.common.security.domain.dto;
+package com.example.bubbleskhu.global.security.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
-package com.example.bubbleskhu.global.common.security.config;
+package com.example.bubbleskhu.global.security.config;
 
-import com.example.bubbleskhu.global.common.security.jwt.JwtFilter;
-import com.example.bubbleskhu.global.common.security.jwt.JwtTokenProvider;
+import com.example.bubbleskhu.global.security.jwt.JwtFilter;
+import com.example.bubbleskhu.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;

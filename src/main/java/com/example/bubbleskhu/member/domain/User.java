@@ -1,6 +1,6 @@
 package com.example.bubbleskhu.member.domain;
 
-import com.example.bubbleskhu.global.common.security.role.Role;
+import com.example.bubbleskhu.global.security.role.Role;
 import com.example.bubbleskhu.major.domain.Major;
 import com.example.bubbleskhu.model.Grade;
 import lombok.*;

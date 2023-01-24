@@ -1,6 +1,6 @@
-package com.example.bubbleskhu.global.common.security.jwt;
+package com.example.bubbleskhu.global.security.jwt;
 
-import com.example.bubbleskhu.global.common.security.domain.dto.TokenDTO;
+import com.example.bubbleskhu.global.security.domain.dto.TokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.global.common.security.role;
+package com.example.bubbleskhu.global.security.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

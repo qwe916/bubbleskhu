@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.global.common.security.domain.dto.request;
+package com.example.bubbleskhu.global.security.domain.dto.request;
 
 import com.example.bubbleskhu.major.domain.Major;
 import com.example.bubbleskhu.model.Grade;

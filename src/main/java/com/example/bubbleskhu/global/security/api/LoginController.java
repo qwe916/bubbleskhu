@@ -1,10 +1,10 @@
-package com.example.bubbleskhu.global.common.security.api;
+package com.example.bubbleskhu.global.security.api;
 
-import com.example.bubbleskhu.global.common.security.application.LoginService;
-import com.example.bubbleskhu.global.common.security.domain.dto.LogoutRequestDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.request.SignUpRequestDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.TokenDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.request.LoginRequestDTO;
+import com.example.bubbleskhu.global.security.application.LoginService;
+import com.example.bubbleskhu.global.security.domain.dto.LogoutRequestDTO;
+import com.example.bubbleskhu.global.security.domain.dto.request.SignUpRequestDTO;
+import com.example.bubbleskhu.global.security.domain.dto.TokenDTO;
+import com.example.bubbleskhu.global.security.domain.dto.request.LoginRequestDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

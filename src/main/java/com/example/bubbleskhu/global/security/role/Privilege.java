@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.global.common.security.role;
+package com.example.bubbleskhu.global.security.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

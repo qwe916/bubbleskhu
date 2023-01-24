@@ -1,11 +1,11 @@
-package com.example.bubbleskhu.global.common.security.application;
+package com.example.bubbleskhu.global.security.application;
 
-import com.example.bubbleskhu.global.common.security.dao.RoleRepository;
-import com.example.bubbleskhu.global.common.security.domain.dto.LogoutRequestDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.TokenDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.request.LoginRequestDTO;
-import com.example.bubbleskhu.global.common.security.domain.dto.request.SignUpRequestDTO;
-import com.example.bubbleskhu.global.common.security.jwt.JwtTokenProvider;
+import com.example.bubbleskhu.global.security.dao.RoleRepository;
+import com.example.bubbleskhu.global.security.domain.dto.LogoutRequestDTO;
+import com.example.bubbleskhu.global.security.domain.dto.TokenDTO;
+import com.example.bubbleskhu.global.security.domain.dto.request.LoginRequestDTO;
+import com.example.bubbleskhu.global.security.domain.dto.request.SignUpRequestDTO;
+import com.example.bubbleskhu.global.security.jwt.JwtTokenProvider;
 import com.example.bubbleskhu.global.error.CustomException;
 import com.example.bubbleskhu.major.dao.MajorRepository;
 import com.example.bubbleskhu.member.dao.UserRepository;

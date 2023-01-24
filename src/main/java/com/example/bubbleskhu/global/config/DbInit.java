@@ -1,9 +1,9 @@
 package com.example.bubbleskhu.global.config;
 
-import com.example.bubbleskhu.global.common.security.dao.PrivilegeRepository;
-import com.example.bubbleskhu.global.common.security.dao.RoleRepository;
-import com.example.bubbleskhu.global.common.security.role.Privilege;
-import com.example.bubbleskhu.global.common.security.role.Role;
+import com.example.bubbleskhu.global.security.dao.PrivilegeRepository;
+import com.example.bubbleskhu.global.security.dao.RoleRepository;
+import com.example.bubbleskhu.global.security.role.Privilege;
+import com.example.bubbleskhu.global.security.role.Role;
 import com.example.bubbleskhu.major.dao.MajorRepository;
 import com.example.bubbleskhu.major.domain.Major;
 import com.example.bubbleskhu.member.dao.UserRepository;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 @Component
