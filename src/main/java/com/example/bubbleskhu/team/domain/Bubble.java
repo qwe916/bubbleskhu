@@ -2,6 +2,7 @@ package com.example.bubbleskhu.team.domain;
 
 import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.member.domain.JoinTeam;
+import com.example.bubbleskhu.model.BaseTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Team {
+public class Bubble extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -23,8 +24,8 @@ public class Team {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "team")
-    private List<JoinTeam> members = new ArrayList<>();
+    @OneToMany(mappedBy = "bubble")
+    private List<JoinTeam> users = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")

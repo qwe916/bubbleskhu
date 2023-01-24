@@ -1,6 +1,6 @@
 package com.example.bubbleskhu.lesson.domain;
 
-import com.example.bubbleskhu.team.domain.Team;
+import com.example.bubbleskhu.team.domain.Bubble;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +23,5 @@ public class Lesson {
     private String name;
 
     @OneToMany(mappedBy = "lesson")
-    private List<Team> teams = new ArrayList<>();
+    private List<Bubble> bubbles = new ArrayList<>();
 }
