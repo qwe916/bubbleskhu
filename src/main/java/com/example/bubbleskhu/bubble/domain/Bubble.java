@@ -4,6 +4,7 @@ import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.member.domain.JoinTeam;
 import com.example.bubbleskhu.model.BaseTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Bubble extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,5 +32,9 @@ public class Bubble extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
+
+    @Column
+    private int numberOfUser;
+
 
 }

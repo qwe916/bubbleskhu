@@ -1,6 +1,6 @@
 package com.example.bubbleskhu.lesson.domain;
 
-import com.example.bubbleskhu.team.domain.Bubble;
+import com.example.bubbleskhu.bubble.domain.Bubble;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
