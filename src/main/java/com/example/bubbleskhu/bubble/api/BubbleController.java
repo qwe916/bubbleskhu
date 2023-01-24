@@ -2,6 +2,7 @@ package com.example.bubbleskhu.bubble.api;
 
 import com.example.bubbleskhu.bubble.application.BubbleService;
 import com.example.bubbleskhu.bubble.domain.dto.request.BubbleRequestDTO;
+import com.example.bubbleskhu.bubble.domain.dto.response.BubbleResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,11 @@ public class BubbleController {
         return ResponseEntity.ok("Bubble 저장");
     }
 
+    @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
+    @GetMapping("/bubbles/{id}")
+    public ResponseEntity<BubbleResponseDTO> findBubbleById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(bubbleService.findBubbleById(id));
+    }
 
 
 }

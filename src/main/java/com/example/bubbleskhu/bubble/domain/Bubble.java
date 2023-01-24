@@ -34,7 +34,8 @@ public class Bubble extends BaseTime {
     private Lesson lesson;
 
     @Column
-    private int numberOfUser;
+    private Integer limitNumberOfUser;
+
 
 
 }
