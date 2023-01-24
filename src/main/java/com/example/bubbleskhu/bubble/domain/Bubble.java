@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.team.domain;
+package com.example.bubbleskhu.bubble.domain;
 
 import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.member.domain.JoinTeam;

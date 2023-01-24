@@ -1,6 +1,6 @@
-package com.example.bubbleskhu.team.dao;
+package com.example.bubbleskhu.bubble.dao;
 
-import com.example.bubbleskhu.team.domain.Bubble;
+import com.example.bubbleskhu.bubble.domain.Bubble;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BubbleRepository extends JpaRepository<Bubble, Long> {

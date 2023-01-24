@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.team.application;
+package com.example.bubbleskhu.bubble.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
