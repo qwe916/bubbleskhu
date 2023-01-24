@@ -61,7 +61,7 @@ public class LoginService {
                     .major(majorRepository.findById(signUpRequestDTO.getMajorId()).get())
                     .grade(signUpRequestDTO.getGrade())
                     .name(signUpRequestDTO.getName())
-                    .roles(Collections.singletonList(roleRepository.findById(1L).get()))
+                    .roles(Collections.singletonList(roleRepository.findByName("ROLE_USER")))
                     .build();
             userRepository.save(user);
         }
