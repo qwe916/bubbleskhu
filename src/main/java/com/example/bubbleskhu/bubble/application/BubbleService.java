@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,4 +44,14 @@ public class BubbleService {
     public void deleteBubbleById(Long id) {
         bubbleRepository.deleteById(id);
     }
+
+    public List<BubbleResponseDTO> findAll() {
+        return bubbleRepository.findAll().stream().map(bubble -> BubbleResponseDTO.builder()
+                .id(bubble.getId())
+                .name(bubble.getName())
+                .lesson(bubble.getLesson())
+                .presentNumberOfUser(bubble.getUsers().size())
+                .build()).collect(Collectors.toList());
+    }
+
 }

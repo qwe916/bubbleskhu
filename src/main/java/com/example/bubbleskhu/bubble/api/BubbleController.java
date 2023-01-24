@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class BubbleController {
@@ -15,8 +17,8 @@ public class BubbleController {
 
 
     @GetMapping("/bubbles")
-    public ResponseEntity<String> findAllBubbles() {
-        return ResponseEntity.ok("비로그인 버블 모두 조회");
+    public ResponseEntity<List<BubbleResponseDTO>> findAllBubbles() {
+        return ResponseEntity.ok(bubbleService.findAll());
     }
 
     @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
@@ -38,7 +40,6 @@ public class BubbleController {
         bubbleService.deleteBubbleById(id);
         return ResponseEntity.ok("Bubble 삭제완료");
     }
-
 
 
 }
