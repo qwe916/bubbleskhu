@@ -1,6 +1,6 @@
-package com.example.bubbleskhu.member.dao;
+package com.example.bubbleskhu.user.dao;
 
-import com.example.bubbleskhu.member.domain.User;
+import com.example.bubbleskhu.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

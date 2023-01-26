@@ -8,8 +8,8 @@ import com.example.bubbleskhu.global.security.domain.dto.request.SignUpRequestDT
 import com.example.bubbleskhu.global.security.jwt.JwtTokenProvider;
 import com.example.bubbleskhu.global.error.CustomException;
 import com.example.bubbleskhu.major.dao.MajorRepository;
-import com.example.bubbleskhu.member.dao.UserRepository;
-import com.example.bubbleskhu.member.domain.User;
+import com.example.bubbleskhu.user.dao.UserRepository;
+import com.example.bubbleskhu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

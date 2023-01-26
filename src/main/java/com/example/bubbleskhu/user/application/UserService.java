@@ -1,7 +1,7 @@
-package com.example.bubbleskhu.member.application;
+package com.example.bubbleskhu.user.application;
 
-import com.example.bubbleskhu.member.dao.UserRepository;
-import com.example.bubbleskhu.member.domain.User;
+import com.example.bubbleskhu.user.dao.UserRepository;
+import com.example.bubbleskhu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -8,6 +8,7 @@ import com.example.bubbleskhu.global.security.domain.dto.request.LoginRequestDTO
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class LoginController {
         return ResponseEntity.ok("회원가입 성공");
     }
 
+    @PreAuthorize("isAuthenticated() and  hasAnyRole(ROLE_USER,ROLE_ADMIN)")
     @PostMapping("/signout")
     public ResponseEntity<?> logout(@RequestBody LogoutRequestDTO logoutRequestDTO) {
         return ResponseEntity.ok(loginService.logout(logoutRequestDTO));

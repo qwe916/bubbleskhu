@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.member.domain;
+package com.example.bubbleskhu.user.domain;
 
 import com.example.bubbleskhu.global.security.role.Role;
 import com.example.bubbleskhu.major.domain.Major;

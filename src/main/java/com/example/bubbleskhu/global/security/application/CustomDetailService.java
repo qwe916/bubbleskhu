@@ -1,8 +1,8 @@
 package com.example.bubbleskhu.global.security.application;
 
 import com.example.bubbleskhu.global.security.role.Role;
-import com.example.bubbleskhu.member.application.UserService;
-import com.example.bubbleskhu.member.domain.User;
+import com.example.bubbleskhu.user.application.UserService;
+import com.example.bubbleskhu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

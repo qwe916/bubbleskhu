@@ -1,7 +1,7 @@
 package com.example.bubbleskhu.bubble.domain;
 
 import com.example.bubbleskhu.lesson.domain.Lesson;
-import com.example.bubbleskhu.member.domain.JoinTeam;
+import com.example.bubbleskhu.user.domain.JoinTeam;
 import com.example.bubbleskhu.model.BaseTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
