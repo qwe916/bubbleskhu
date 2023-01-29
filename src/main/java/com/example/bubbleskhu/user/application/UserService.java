@@ -12,6 +12,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     public Optional<User> findUser(String username) {
-        return userRepository.findByUserId(username);
+        return userRepository.findByUsername(username);
     }
 }

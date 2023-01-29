@@ -4,6 +4,8 @@ import com.example.bubbleskhu.global.security.dao.PrivilegeRepository;
 import com.example.bubbleskhu.global.security.dao.RoleRepository;
 import com.example.bubbleskhu.global.security.role.Privilege;
 import com.example.bubbleskhu.global.security.role.Role;
+import com.example.bubbleskhu.lesson.dao.LessonRepository;
+import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.major.dao.MajorRepository;
 import com.example.bubbleskhu.major.domain.Major;
 import com.example.bubbleskhu.user.dao.UserRepository;
@@ -20,16 +22,18 @@ import java.util.Collections;
 @Component
 public class DbInit {
     @Autowired
-    MajorRepository majorRepository;
+    private MajorRepository majorRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
+    @Autowired
+    private LessonRepository lessonRepository;
     @PostConstruct
     public void init() {
 
@@ -59,7 +63,7 @@ public class DbInit {
         majorRepository.save(Humanities);
 
         User user = User.builder()
-                .userId("admin")
+                .username("admin")
                 .userPassword(passwordEncoder.encode("admin"))
                 .major(majorRepository.findById(1L).get())
                 .grade(Grade.FIRST)
@@ -68,7 +72,9 @@ public class DbInit {
                 .build();
 
         userRepository.save(user);
-
+        lessonRepository.save(Lesson.builder()
+                .name("프로젝트 수업")
+                .build());
 
 
     }

@@ -1,13 +1,14 @@
 package com.example.bubbleskhu.bubble.api;
 
 import com.example.bubbleskhu.bubble.application.BubbleService;
-import com.example.bubbleskhu.bubble.domain.dto.request.BubbleRequestDTO;
-import com.example.bubbleskhu.bubble.domain.dto.response.BubbleResponseDTO;
+import com.example.bubbleskhu.bubble.dao.dto.request.BubbleRequestDTO;
+import com.example.bubbleskhu.bubble.dao.dto.response.BubbleResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,8 @@ public class BubbleController {
 
     @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
     @PostMapping("/bubbles")
-    public ResponseEntity<String> saveBubble(@RequestBody BubbleRequestDTO bubbleRequestDTO) {
-        bubbleService.saveBubble(bubbleRequestDTO);
+    public ResponseEntity<String> saveBubble(Principal principal, @RequestBody BubbleRequestDTO bubbleRequestDTO) {
+        bubbleService.saveBubble(principal,bubbleRequestDTO);
         return ResponseEntity.ok("Bubble 저장");
     }
 

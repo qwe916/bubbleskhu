@@ -2,34 +2,49 @@ package com.example.bubbleskhu.bubble.application;
 
 import com.example.bubbleskhu.bubble.dao.BubbleRepository;
 import com.example.bubbleskhu.bubble.domain.Bubble;
-import com.example.bubbleskhu.bubble.domain.dto.request.BubbleRequestDTO;
-import com.example.bubbleskhu.bubble.domain.dto.response.BubbleResponseDTO;
+import com.example.bubbleskhu.bubble.dao.dto.request.BubbleRequestDTO;
+import com.example.bubbleskhu.bubble.dao.dto.response.BubbleResponseDTO;
 import com.example.bubbleskhu.global.error.CustomException;
-import com.example.bubbleskhu.lesson.LessonRepository;
+import com.example.bubbleskhu.joinTeam.dao.JoinTeamRepository;
+import com.example.bubbleskhu.lesson.dao.LessonRepository;
 import com.example.bubbleskhu.lesson.domain.Lesson;
+import com.example.bubbleskhu.user.dao.UserRepository;
+import com.example.bubbleskhu.joinTeam.domain.JoinTeam;
+import com.example.bubbleskhu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BubbleService {
+    private final UserRepository userRepository;
     private final LessonRepository lessonRepository;
     private final BubbleRepository bubbleRepository;
-    public void saveBubble(BubbleRequestDTO bubbleRequestDTO) {
-        Lesson lesson = lessonRepository.findById(bubbleRequestDTO.getLessonId()).get();
+    private final JoinTeamRepository joinTeamRepository;
+    @Transactional
+    public void saveBubble(Principal principal,BubbleRequestDTO bubbleRequestDTO) {
+        String name = principal.getName();
+        User user = userRepository.findByUsername(name).get();
         Bubble bubble = Bubble.builder()
                 .name(bubbleRequestDTO.getName())
                 .limitNumberOfUser(bubbleRequestDTO.getNumberOfUser())
-                .lesson(lesson)
+                .lesson(bubbleRequestDTO.getLesson())
                 .build();
         bubbleRepository.save(bubble);
+
+        joinTeamRepository.save(JoinTeam.builder()
+                .bubble(bubble)
+                .user(user)
+                .build());
     }
 
+    @Transactional(readOnly = true)
     public BubbleResponseDTO findBubbleById(Long id) {
         Bubble bubble = bubbleRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Bubble 존재하지 않습니다.", HttpStatus.NOT_FOUND));
@@ -41,10 +56,14 @@ public class BubbleService {
                 .build();
     }
 
+    @Transactional
     public void deleteBubbleById(Long id) {
+        Bubble bubble = bubbleRepository.findById(id).orElseThrow(() -> new CustomException( "해다 Bubble이 존재하지 않습니다.",HttpStatus.NOT_FOUND));
+        joinTeamRepository.findByBubble(bubble).stream().forEach(joinTeam -> joinTeamRepository.delete(joinTeam));
         bubbleRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<BubbleResponseDTO> findAll() {
         return bubbleRepository.findAll().stream().map(bubble -> BubbleResponseDTO.builder()
                 .id(bubble.getId())

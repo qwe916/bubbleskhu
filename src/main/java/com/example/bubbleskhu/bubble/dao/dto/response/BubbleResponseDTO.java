@@ -1,4 +1,4 @@
-package com.example.bubbleskhu.bubble.domain.dto.response;
+package com.example.bubbleskhu.bubble.dao.dto.response;
 
 import com.example.bubbleskhu.lesson.domain.Lesson;
 import lombok.Builder;

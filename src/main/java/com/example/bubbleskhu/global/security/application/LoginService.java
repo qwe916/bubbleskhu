@@ -51,12 +51,12 @@ public class LoginService {
     }
 
     public void signup(SignUpRequestDTO signUpRequestDTO) {
-        if (userRepository.existsByUserId(signUpRequestDTO.getUserId())) {
+        if (userRepository.existsByUsername(signUpRequestDTO.getUserId())) {
             throw new CustomException("이미 존재하는 회원 입니다.", HttpStatus.UNPROCESSABLE_ENTITY);
         } else {
 
             User user = User.builder()
-                    .userId(signUpRequestDTO.getUserId())
+                    .username(signUpRequestDTO.getUserId())
                     .userPassword(passwordEncoder.encode(signUpRequestDTO.getUserPassword()))
                     .major(majorRepository.findById(signUpRequestDTO.getMajorId()).get())
                     .grade(signUpRequestDTO.getGrade())
