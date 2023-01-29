@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/signin","/signup").permitAll()
+                .antMatchers("/signin","/signup","/bubbles").permitAll()
                 .and()
                 .addFilterBefore(new JwtFilter(tokenProvider,redisTemplate), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
