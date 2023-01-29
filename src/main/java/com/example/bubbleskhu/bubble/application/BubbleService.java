@@ -6,8 +6,6 @@ import com.example.bubbleskhu.bubble.dao.dto.request.BubbleRequestDTO;
 import com.example.bubbleskhu.bubble.dao.dto.response.BubbleResponseDTO;
 import com.example.bubbleskhu.global.error.CustomException;
 import com.example.bubbleskhu.joinTeam.dao.JoinTeamRepository;
-import com.example.bubbleskhu.lesson.dao.LessonRepository;
-import com.example.bubbleskhu.lesson.domain.Lesson;
 import com.example.bubbleskhu.user.dao.UserRepository;
 import com.example.bubbleskhu.joinTeam.domain.JoinTeam;
 import com.example.bubbleskhu.user.domain.User;
@@ -24,13 +22,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BubbleService {
     private final UserRepository userRepository;
-    private final LessonRepository lessonRepository;
     private final BubbleRepository bubbleRepository;
     private final JoinTeamRepository joinTeamRepository;
     @Transactional
     public void saveBubble(Principal principal,BubbleRequestDTO bubbleRequestDTO) {
-        String name = principal.getName();
-        User user = userRepository.findByUsername(name).get();
+        User user = getUser(principal);
         Bubble bubble = Bubble.builder()
                 .name(bubbleRequestDTO.getName())
                 .limitNumberOfUser(bubbleRequestDTO.getNumberOfUser())
@@ -42,6 +38,12 @@ public class BubbleService {
                 .bubble(bubble)
                 .user(user)
                 .build());
+    }
+
+    private User getUser(Principal principal) {
+        String name = principal.getName();
+        User user = userRepository.findByUsername(name).get();
+        return user;
     }
 
     @Transactional(readOnly = true)
@@ -73,4 +75,15 @@ public class BubbleService {
                 .build()).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void joinBubble(Long id, Principal principal) {
+        User user = getUser(principal);
+        Bubble bubble = bubbleRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Bubble 존재하지 않습니다.", HttpStatus.NOT_FOUND));
+        joinTeamRepository.save(JoinTeam.builder()
+                .bubble(bubble)
+                .user(user)
+                .build());
+
+    }
 }

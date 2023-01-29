@@ -36,6 +36,13 @@ public class BubbleController {
     }
 
     @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
+    @PostMapping("/bubbles/{id}")
+    public ResponseEntity<String> joinBubble(@PathVariable("id") Long id, Principal principal) {
+        bubbleService.joinBubble(id,principal);
+        return ResponseEntity.ok("버블 참여 성공");
+    }
+
+    @PreAuthorize("isAuthenticated() and  (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
     @DeleteMapping("/bubbles/{id}")
     public ResponseEntity<String> deleteBubbleById(@PathVariable("id") Long id) {
         bubbleService.deleteBubbleById(id);
