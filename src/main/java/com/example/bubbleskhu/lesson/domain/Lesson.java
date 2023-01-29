@@ -1,27 +1,28 @@
 package com.example.bubbleskhu.lesson.domain;
 
 import com.example.bubbleskhu.bubble.domain.Bubble;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "lesson")
     private List<Bubble> bubbles = new ArrayList<>();
 }

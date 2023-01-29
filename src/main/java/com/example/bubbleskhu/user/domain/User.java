@@ -1,6 +1,7 @@
 package com.example.bubbleskhu.user.domain;
 
 import com.example.bubbleskhu.global.security.role.Role;
+import com.example.bubbleskhu.joinTeam.domain.JoinTeam;
 import com.example.bubbleskhu.major.domain.Major;
 import com.example.bubbleskhu.model.Grade;
 import lombok.*;
@@ -20,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column
@@ -30,8 +31,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column
     private Grade grade;
-    @Column(name = "user_email")
-    private String userId;
+    @Column
+    private String username;
     @Column
     private String userPassword;
     @Transient
@@ -60,7 +61,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userId;
+        return username;
     }
 
     @Override
