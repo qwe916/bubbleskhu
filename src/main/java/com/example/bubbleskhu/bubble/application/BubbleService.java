@@ -6,6 +6,8 @@ import com.example.bubbleskhu.bubble.dao.dto.request.BubbleRequestDTO;
 import com.example.bubbleskhu.bubble.dao.dto.response.BubbleResponseDTO;
 import com.example.bubbleskhu.global.error.CustomException;
 import com.example.bubbleskhu.joinTeam.dao.JoinTeamRepository;
+import com.example.bubbleskhu.post.dao.PostRepository;
+import com.example.bubbleskhu.post.domain.Post;
 import com.example.bubbleskhu.user.dao.UserRepository;
 import com.example.bubbleskhu.joinTeam.domain.JoinTeam;
 import com.example.bubbleskhu.user.domain.User;
@@ -24,6 +26,7 @@ public class BubbleService {
     private final UserRepository userRepository;
     private final BubbleRepository bubbleRepository;
     private final JoinTeamRepository joinTeamRepository;
+    private final PostRepository postRepository;
     @Transactional
     public void saveBubble(Principal principal,BubbleRequestDTO bubbleRequestDTO) {
         User user = getUser(principal);
@@ -33,7 +36,10 @@ public class BubbleService {
                 .lesson(bubbleRequestDTO.getLesson())
                 .build();
         bubbleRepository.save(bubble);
-
+        postRepository.save(Post.builder()
+                .content(bubbleRequestDTO.getContent())
+                .bubble(bubble)
+                .build());
         joinTeamRepository.save(JoinTeam.builder()
                 .bubble(bubble)
                 .user(user)
@@ -55,6 +61,7 @@ public class BubbleService {
                 .name(bubble.getName())
                 .lesson(bubble.getLesson())
                 .presentNumberOfUser(bubble.getUsers().size())
+                .post(bubble.getPost())
                 .build();
     }
 
@@ -72,6 +79,7 @@ public class BubbleService {
                 .name(bubble.getName())
                 .lesson(bubble.getLesson())
                 .presentNumberOfUser(bubble.getUsers().size())
+                .post(bubble.getPost())
                 .build()).collect(Collectors.toList());
     }
 
