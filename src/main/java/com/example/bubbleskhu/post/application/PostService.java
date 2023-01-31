@@ -20,6 +20,6 @@ public class PostService {
     @Transactional
     public void updatePost(Long id, PostRequestDTO postRequestDTO) {
         Bubble bubble = bubbleRepository.findById(id).orElseThrow(() -> new CustomException("Bubble이 존재하지 않습니다.", HttpStatus.NOT_FOUND));
-        bubble.getPost().updatePost(postRequestDTO.getContent());
+        bubble.getPost().updatePost(postRequestDTO);
     }
 }

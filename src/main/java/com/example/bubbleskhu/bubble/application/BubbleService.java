@@ -38,6 +38,7 @@ public class BubbleService {
         bubbleRepository.save(bubble);
         postRepository.save(Post.builder()
                 .content(bubbleRequestDTO.getContent())
+                .title(bubbleRequestDTO.getTitle())
                 .bubble(bubble)
                 .build());
         joinTeamRepository.save(JoinTeam.builder()

@@ -10,6 +10,7 @@ public class BubbleRequestDTO {
     private String name;
     private int numberOfUser;
     private Lesson lesson;
+    private String title;
     private String content;
 
 }

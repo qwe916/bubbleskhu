@@ -1,6 +1,7 @@
 package com.example.bubbleskhu.post.domain;
 
 import com.example.bubbleskhu.bubble.domain.Bubble;
+import com.example.bubbleskhu.post.domain.dto.request.PostRequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,8 @@ public class Post {
     private Long id;
 
     @Column
+    private String title;
+    @Column
     private String content;
 
     @JsonIgnore
@@ -28,8 +31,9 @@ public class Post {
     @JoinColumn(name = "bubble_id")
     private Bubble bubble;
 
-    public void updatePost(String content) {
-        this.content = content;
+    public void updatePost(PostRequestDTO postRequestDTO) {
+        this.title = postRequestDTO.getTitle();
+        this.content = postRequestDTO.getContent();
     }
 
 }
