@@ -24,13 +24,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtTokenProvider {
     private final Key key;
-    private final long validityTime;
+    private final long ACCESS_TOKEN_EXPIRED_TIME = 60*60*24*1000L;
+    private final long REFRESH_TOKEN_EXPIRED_TIME = 7 * 24 * 60 * 60 * 1000L;
 
-    public JwtTokenProvider( @Value("${jwt.secret}") String secretKey,
-                             @Value("${jwt.token-validity-in-milliseconds}") long validityTime) {
-            byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-            this.key = Keys.hmacShaKeyFor(keyBytes);
-            this.validityTime = validityTime;
+    public JwtTokenProvider( @Value("${jwt.secret}") String secretKey) {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     public TokenDTO createToken(Authentication authentication) {
@@ -39,23 +38,23 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
         log.info("authorities = {}",authorities);
         long now = System.currentTimeMillis();
-        Date tokenExpiredTime = new Date(now + validityTime);
+        Date AccessTokenExpiredTime = new Date(now + ACCESS_TOKEN_EXPIRED_TIME);
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
-                .setExpiration(tokenExpiredTime)
+                .setExpiration(AccessTokenExpiredTime)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         String refreshToken = Jwts.builder()
-                .setExpiration(tokenExpiredTime)
+                .setExpiration(AccessTokenExpiredTime)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
         return TokenDTO.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
-                .refreshTokenExpirationTime(tokenExpiredTime)
+                .refreshTokenExpirationTime(new Date(now+REFRESH_TOKEN_EXPIRED_TIME))
                 .refreshToken(refreshToken)
                 .build();
     }

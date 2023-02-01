@@ -30,9 +30,10 @@ public class LoginController {
         return ResponseEntity.ok("회원가입 성공");
     }
 
-    @PreAuthorize("isAuthenticated() and  hasAnyRole(ROLE_USER,ROLE_ADMIN)")
+    @PreAuthorize("isAuthenticated() and (hasRole('ROLE_USER') or hasRole('ROLE_ADMIN'))")
     @PostMapping("/signout")
-    public ResponseEntity<?> logout(@RequestBody LogoutRequestDTO logoutRequestDTO) {
-        return ResponseEntity.ok(loginService.logout(logoutRequestDTO));
+    public ResponseEntity<String> logout(@RequestBody LogoutRequestDTO logoutRequestDTO) {
+        loginService.logout(logoutRequestDTO);
+        return ResponseEntity.ok("로그아웃 되었습니다.");
     }
 }
