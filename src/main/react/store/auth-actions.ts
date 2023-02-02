@@ -1,9 +1,9 @@
 import { GET, POST }  from "./fetch-auth-action";
 
-const createTokenHeader = (token:string) => {
+const createTokenHeader = (grantType:string,token:string) => {
     return {
         headers: {
-            'Authorization': 'Bearer ' + token
+            'Authorization': grantType + token
         }
     }
 }
@@ -15,17 +15,21 @@ const calculateRemainingTime = (expirationTime:number) => {
     return remainingDuration;
 };
 
-export const loginTokenHandler = (token:string, expirationTime:number) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('expirationTime', String(expirationTime));
+export const loginTokenHandler = (grantType:string, accessToken:string,refreshToken:string, refreshTokenExpirationTime:number) => {
+    localStorage.setItem('grantType', grantType);
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('refreshTokenExpirationTime', String(refreshTokenExpirationTime));
 
-    const remainingTime = calculateRemainingTime(expirationTime);
+    const remainingTime = calculateRemainingTime(refreshTokenExpirationTime);
     return remainingTime;
 }
 
 export const retrieveStoredToken = () => {
-    const storedToken = localStorage.getItem('token');
-    const storedExpirationDate = localStorage.getItem('expirationTime') || '0';
+    const grantType = localStorage.getItem('grantType');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const accessToken = localStorage.getItem('accessToken');
+    const storedExpirationDate = localStorage.getItem('refreshTokenExpirationTime') || '0';
 
     const remaingTime = calculateRemainingTime(+ storedExpirationDate);
 
@@ -36,7 +40,9 @@ export const retrieveStoredToken = () => {
     }
 
     return {
-        token: storedToken,
+        grantType : grantType,
+        accessToken: accessToken,
+        refreshToken : refreshToken,
         duration: remaingTime
     }
 }
@@ -57,32 +63,19 @@ export const loginActionHandler = (userId:string, userPassword: string) => {
     return response;
 };
 
-export const logoutActionHandler = () => {
+export const logoutActionHandler = (grantType:string,accessToken : string) => {
     localStorage.removeItem('token');
-    localStorage.removeItem('expirationTime');
+    localStorage.removeItem('refreshTokenExpirationTime');
+
+    const URL = '/signout';
+    const logoutObject = {accessToken};
+    const response = POST(URL, logoutObject,  createTokenHeader(grantType,accessToken));
+
+    return response;
 };
 
-export const getUserActionHandler = (token:string) => {
-    const URL = '/member/me';
-    const response = GET(URL, createTokenHeader(token));
-    return response;
-}
-
-export const changeNicknameActionHandler = ( nickname:string, token: string) => {
-    const URL = '/member/nickname';
-    const changeNicknameObj = { nickname };
-    const response = POST(URL, changeNicknameObj, createTokenHeader(token));
-
-    return response;
-}
-
-export const changePasswordActionHandler = (
-    exPassword: string,
-    newPassword: string,
-    token: string
-) => {
-    const URL = '/member/password';
-    const changePasswordObj = { exPassword, newPassword }
-    const response = POST(URL, changePasswordObj, createTokenHeader(token));
+export const getBubbles = (grantType:string,accessToken : string) => {
+    const URL = '/bubbles';
+    const response = GET(URL, createTokenHeader(grantType,accessToken));
     return response;
 }
