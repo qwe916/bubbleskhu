@@ -5,6 +5,9 @@ import com.example.bubbleskhu.global.security.domain.dto.LogoutRequestDTO;
 import com.example.bubbleskhu.global.security.domain.dto.request.SignUpRequestDTO;
 import com.example.bubbleskhu.global.security.domain.dto.TokenDTO;
 import com.example.bubbleskhu.global.security.domain.dto.request.LoginRequestDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final LoginService loginService;
 
+
     @PostMapping("/signin")
     public ResponseEntity<TokenDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return ResponseEntity.ok(loginService.login(loginRequestDTO));
     }
-
+    @Operation(summary = "sign in", description = "회원가입")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK !!"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+    })
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
         loginService.signup(signUpRequestDTO);
