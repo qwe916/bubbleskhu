@@ -44,7 +44,7 @@ public class LoginService {
 
         TokenDTO tokenDTO = tokenProvider.createToken(authentication);
 
-        redisTemplate.opsForValue().set( authentication.getName(), tokenDTO.getRefreshToken(), tokenDTO.getRefreshTokenExpirationTime().getTime(), TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set( authentication.getName(), tokenDTO.getRefreshToken(), tokenDTO.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return tokenDTO;
 
